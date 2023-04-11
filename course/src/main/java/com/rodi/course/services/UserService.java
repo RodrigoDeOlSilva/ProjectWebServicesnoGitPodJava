@@ -7,20 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rodi.course.entities.User;
-import com.rodi.course.repositories.UserRepositiry;
+import com.rodi.course.repositories.UserRepository;
 
 @Service
 public class UserService {
     
     @Autowired
-    private UserRepositiry repositiry;
+    private UserRepository repository;
 
     public List<User> findAll(){
-        return repositiry.findAll();
+        return repository.findAll();
     }
 
     public User findById(Long id){
-       Optional<User> obj = repositiry.findById(id);
+       Optional<User> obj = repository.findById(id);
        return obj.get();
     }
 

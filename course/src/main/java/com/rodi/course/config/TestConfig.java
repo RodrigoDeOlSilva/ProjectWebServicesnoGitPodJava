@@ -1,5 +1,6 @@
 package com.rodi.course.config;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,28 +9,45 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.rodi.course.entities.Order;
 import com.rodi.course.entities.User;
-import com.rodi.course.repositories.UserRepositiry;
+import com.rodi.course.repositories.OrderRepository;
+import com.rodi.course.repositories.UserRepository;
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
     
     @Autowired
-    private UserRepositiry userRepositiry;
+    private UserRepository userRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Funcionando");
+    
         List<User> listUser = new ArrayList<>();
-        listUser.add(new User(null,"Rodrigo Silva","rodrigo@gmail.com","999784545","123456"));
-        listUser.add(new User(null,"Fernando Silva","fernando@gmail.com","998897454","656565"));
-        listUser.add(new User(null,"Bruna Silva","bruna@gmail.com","9994545","125659593456"));
-        listUser.add(new User(null,"Patricia Silva","patricia@gmail.com","9945454","87874"));
+        User u1 = new User(null,"Rodrigo Silva","rodrigo@gmail.com","999784545","123456");
+        listUser.add(u1);
+        User u2 = new User(null,"Fernando Silva","fernando@gmail.com","998897454","656565");
+        listUser.add(u2);
+        User u3 = new User(null,"Bruna Silva","bruna@gmail.com","9994545","125659593456");
+        listUser.add(u3);
+        User u4 = new User(null,"Patricia Silva","patricia@gmail.com","9945454","87874");
+        listUser.add(u4);
+        
+        List<Order> listOrders = new ArrayList<>();
+        listOrders.add(new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1));
+        listOrders.add(new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2));
+        listOrders.add(new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u3));
+        listOrders.add(new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u3));
 
-        userRepositiry.saveAll(listUser);
+        userRepository.saveAll(listUser);
 
+        
 
+        orderRepository.saveAll(listOrders);
 
     }
 
